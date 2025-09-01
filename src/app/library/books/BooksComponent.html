@@ -1,0 +1,307 @@
+<div class="container my-2 px-2">
+  <div class="row mt-1">
+    <div class="col-3">
+      <h1>Add Book</h1>
+      <form
+        (submit)="save()"
+        [formGroup]="bookForm"
+        [ngClass]="{ 'disabled-form': !isAdmin }"
+        [ngStyle]="!isAdmin ? { 'pointer-events': 'none', opacity: '0.6' } : {}"
+      >
+        <div class="form-group">
+          <label for="title" class="small mb-1">Title</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            name="title"
+            formControlName="title"
+            required
+            id="title"
+            placeholder="Title Required"
+          />
+          <span
+            *ngIf="
+              bookForm.controls.title.invalid && bookForm.controls.title.touched
+            "
+            class="form-text text-danger"
+          >
+            Title Required
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="pages" class="small mb-1">Pages</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            name="pages"
+            formControlName="pages"
+            required
+            min="0"
+            id="pages"
+            placeholder="Pages Required"
+          />
+          <span
+            *ngIf="
+              bookForm.controls.pages.invalid && bookForm.controls.pages.touched
+            "
+            class="form-text text-danger"
+          >
+            Pages Required
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="price" class="small mb-1">Price</label>
+          <input
+            type="number"
+            class="form-control form-control-sm"
+            name="price"
+            formControlName="price"
+            required
+            min="0"
+            id="price"
+            placeholder="Price Required"
+          />
+          <span
+            *ngIf="
+              bookForm.controls.price.invalid && bookForm.controls.price.touched
+            "
+            class="form-text text-danger"
+          >
+            Price Required
+          </span>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input form-control-sm"
+            type="checkbox"
+            formControlName="discontinued"
+            id="discontinued"
+            name="discontinued"
+            style="transform: scale(0.6)"
+          />
+          <label class="form-check-label" for="discontinued" class="small mb-1">
+            Discontinued
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="publishingHouse" class="small mb-1"
+            >Publishing House</label
+          >
+          <select
+            class="form-select form-control-sm"
+            formControlName="publishingHouseId"
+            name="publishingHouse"
+            required
+            Id="publishingHouse"
+            style="font-size: 0.9rem"
+          >
+            <option value="null">Select a Publishing House</option>
+            @for (publishingHouse of publishingHouses; track
+            publishingHouse.idPublishingHouse) {
+            <option [value]="publishingHouse.idPublishingHouse">
+              {{ publishingHouse.namePublishingHouse }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="author" class="small mb-1">Author</label>
+          <select
+            class="form-select form-control-sm"
+            formControlName="authorId"
+            name="author"
+            required
+            id="author"
+            style="font-size: 0.9rem"
+          >
+            <option value="null">Select an Author</option>
+            @for (author of authors; track author.idAuthor) {
+            <option [value]="author.idAuthor">
+              {{ author.nameAuthor }}
+            </option>
+            }
+          </select>
+          <span
+            *ngIf="
+              bookForm.controls.authorId.invalid &&
+              bookForm.controls.authorId.touched
+            "
+            class="form-text text-danger"
+          >
+            Author Required
+          </span>
+        </div>
+        <!-- Display the name of the selected image -->
+        @if (bookForm.controls.photoName.value) {
+        <div class="form-group">
+          <label for="nameImage" class="small mb-1"
+            >Name of the selected image:</label
+          >
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            id="nameImage"
+            formControlName="photoName"
+            name="nameImage"
+            readonly
+          />
+        </div>
+        }
+        <div class="mt-3">
+          <label for="image" class="form-label" class="small mb-1"
+            >Choose a image</label
+          >
+          <input
+            class="form-control form-control-sm"
+            type="file"
+            id="image"
+            (change)="onChange($event)"
+            accept="image/*"
+            #fileInput
+            style="font-size: 0.6rem"
+          />
+        </div>
+        <div class="d-flex gap-2 mt-2">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="bookForm.invalid || !isAdmin"
+            style="font-size: 0.85rem; padding: 0.25rem 0.75rem"
+          >
+            Accept
+          </button>
+          @if (book().isbn !== 0) {
+          <button
+            type="button"
+            class="btn btn-warning"
+            (click)="cancelEdition()"
+            style="font-size: 0.85rem; padding: 0.25rem 0.75rem"
+          >
+            Cancel edition
+          </button>
+          }
+        </div>
+      </form>
+    </div>
+    <div class="col-9">
+      <p-table
+        [value]="books"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem', border: 'none' }"
+        [style]="{ border: 'none', boxShadow: 'none' }"
+        currentPageReportTemplate="{first} of {last} of a total of {totalRecords} books"
+        [rowsPerPageOptions]="[5, 10]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th></th>
+            <th style="font-size: 15px">Title</th>
+            <th style="font-size: 15px">Author</th>
+            <th style="font-size: 15px">Pub-House</th>
+            <th style="font-size: 15px">Pages</th>
+            <th style="font-size: 15px">Price</th>
+            <th style="font-size: 12px">Discontinued</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-book>
+          <tr>
+            <td>
+              @if (book.photoCover) {
+              <img
+                [src]="'http://localhost:3000/uploads/' + book.photoCover"
+                width="80"
+              />
+              }
+            </td>
+            <td style="font-size: 12px">{{ book.title }}</td>
+            <td style="font-size: 12px">{{ getAuthorName(book.authorId) }}</td>
+            <td style="font-size: 12px">
+              {{ getPublishingHouseName(book.publishingHouseId) }}
+            </td>
+            <td style="font-size: 12px">{{ book.pages }}</td>
+            <td style="font-size: 12px">
+              {{ book.price | number : "1.2-2" }} €
+            </td>
+            <td style="font-size: 12px">
+              {{ book.discontinued ? "Yes" : "No" }}
+            </td>
+            <td></td>
+            <td>
+              <div class="acciones-botones">
+                <p-button
+                  icon="pi pi-pencil"
+                  (click)="edit(book)"
+                  styleClass="p-button-rounded custom-edit-btn"
+                  [ngClass]="{ 'disabled-form': !isAdmin }"
+                  [ngStyle]="
+                    !isAdmin ? { 'pointer-events': 'none', opacity: '0.6' } : {}
+                  "
+                ></p-button>
+                <p-button
+                  icon="pi pi-trash"
+                  (click)="confirmDelete(book)"
+                  styleClass="p-button-rounded custom-delete-btn"
+                  [ngClass]="{ 'disabled-form': !isAdmin }"
+                  [ngStyle]="
+                    !isAdmin ? { 'pointer-events': 'none', opacity: '0.6' } : {}
+                  "
+                ></p-button>
+                <p-button
+                  icon="pi pi-eye"
+                  (click)="showImage(book)"
+                  [disabled]="!book.photoCover"
+                  styleClass="p-button-rounded custom-view-btn"
+                ></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!-- CSS/HTML Custom Confirmation Dialog -->
+      <div *ngIf="showCustomConfirm" class="custom-dialog-overlay">
+        <div class="custom-dialog-box">
+          <div class="custom-dialog-header">Are you sure?</div>
+          <div class="custom-dialog-content">
+            <i
+              class="pi pi-exclamation-triangle"
+              style="font-size: 2rem; color: #dc3545"
+            ></i>
+            <span>{{ customConfirmMessage }}</span>
+          </div>
+          <div class="custom-dialog-footer">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="showCustomConfirm = false"
+            >
+              No
+            </button>
+            <button class="btn btn-danger" (click)="onCustomConfirmAccept()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+      <p-confirmDialog></p-confirmDialog>
+      <p-dialog
+        header="Alert"
+        [(visible)]="visibleError"
+        [style]="{ width: '50vw' }"
+      >
+        <p>
+          {{ errorMessage }}
+        </p>
+      </p-dialog>
+      <p-dialog
+        header="{{ book().title }}"
+        [(visible)]="visiblePhoto"
+        [style]="{ width: '30vw' }"
+      >
+        <img [src]="photo" alt="PhotoCover of the book" class="img-fluid" />
+      </p-dialog>
+    </div>
+  </div>
+</div>

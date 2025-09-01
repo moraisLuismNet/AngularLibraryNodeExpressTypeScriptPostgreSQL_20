@@ -1,0 +1,95 @@
+/* You can add global styles to this file, and also import other style files */
+/* Forzar recuadro gris y bordes redondeados en el selector de filas por página de PrimeNG 18 */
+.p-paginator-current {
+  font-size: 0.95rem !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 0.5rem !important;
+}
+
+.p-paginator-rpp-dropdown {
+  border: 2px solid #bdbdbd !important;
+  border-radius: 0.5rem !important;
+  background: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  min-width: 5rem !important;
+  min-height: 2.1rem !important;
+  height: 2.1rem !important;
+  font-size: 1.05rem !important;
+  padding: 0.1rem 0.8rem !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.p-paginator-rpp-dropdown .p-select-label {
+  color: #333 !important;
+  font-weight: 500;
+  background: #fff !important;
+  font-size: 1.05rem !important;
+  padding: 0.1rem 0.8rem !important;
+}
+
+.p-paginator {
+  margin-top: 2rem !important;
+}
+
+body .p-dialog-content,
+body .p-confirm-dialog .p-confirm-dialog-message,
+body .p-confirm-dialog-message,
+body .p-dialog .p-confirm-dialog-message {
+  background: #f8f9fa !important;
+  font-weight: bold !important;
+  color: #212529 !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.custom-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-dialog-box {
+  background: #f8f9fa;
+  color: #212529;
+  font-weight: bold;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  min-width: 350px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.custom-dialog-header {
+  padding: 1.2rem 1.5rem 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+.custom-dialog-content {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.custom-dialog-footer {
+  padding: 0.8rem 1.5rem 1.2rem 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  justify-content: flex-end;
+}

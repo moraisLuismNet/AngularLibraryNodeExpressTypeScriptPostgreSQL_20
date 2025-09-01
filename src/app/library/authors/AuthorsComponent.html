@@ -1,0 +1,140 @@
+<div class="container my-2 px-2">
+  <div class="row mt-4">
+    <div class="col-4">
+      <h1>Add Author</h1>
+      <form
+        #form="ngForm"
+        (ngSubmit)="save()"
+        [formGroup]="authorForm"
+        [ngClass]="{ 'disabled-form': !isAdmin }"
+        [ngStyle]="!isAdmin ? { 'pointer-events': 'none', opacity: '0.6' } : {}"
+      >
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            formControlName="nameAuthor"
+            required
+            id="name"
+            placeholder="Name Required"
+          />
+          <span
+            *ngIf="
+              authorForm.controls.nameAuthor.invalid &&
+              authorForm.controls.nameAuthor.touched
+            "
+            class="form-text text-danger"
+          >
+            Name Required
+          </span>
+        </div>
+        <div class="d-flex gap-2 mt-2">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="form.invalid || !isAdmin"
+          >
+            Accept
+          </button>
+          @if (author().idAuthor !== 0) {
+          <button
+            type="button"
+            class="btn btn-warning"
+            (click)="cancelEdition()"
+          >
+            Cancel edition
+          </button>
+          }
+        </div>
+      </form>
+    </div>
+    <div class="col-8">
+      <p-table
+        [value]="authors"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem', border: 'none' }"
+        [style]="{ border: 'none', boxShadow: 'none' }"
+        currentPageReportTemplate="{first} of {last} of a total of {totalRecords} authors"
+        [rowsPerPageOptions]="[5, 10]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Total Books</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-author>
+          <tr>
+            <td>{{ author.nameAuthor }}</td>
+            <td>{{ author.totalBooks }}</td>
+            <td>
+              <div class="acciones-botones">
+                <p-button
+                  icon="pi pi-pencil"
+                  (click)="edit(author)"
+                  styleClass="p-button-rounded custom-edit-btn"
+                  [ngClass]="{ 'disabled-form': !isAdmin }"
+                  [ngStyle]="
+                    !isAdmin ? { 'pointer-events': 'none', opacity: '0.6' } : {}
+                  "
+                ></p-button>
+                <p-button
+                  icon="pi pi-trash"
+                  (click)="confirmDelete(author)"
+                  styleClass="p-button-rounded custom-delete-btn"
+                  [ngClass]="{
+                    'disabled-form': !isAdmin || author.totalBooks > 0
+                  }"
+                  [ngStyle]="
+                    !isAdmin || author.totalBooks > 0
+                      ? { 'pointer-events': 'none', opacity: '0.6' }
+                      : {}
+                  "
+                ></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-confirmDialog></p-confirmDialog>
+      <p-dialog
+        header="Alert"
+        [(visible)]="visibleError"
+        [style]="{ width: '50vw' }"
+      >
+        <p>
+          {{ errorMessage }}
+        </p>
+      </p-dialog>
+      <!-- CSS/HTML Custom Confirmation Dialog -->
+      <div *ngIf="showCustomConfirm" class="custom-dialog-overlay">
+        <div class="custom-dialog-box">
+          <div class="custom-dialog-header">Are you sure?</div>
+          <div class="custom-dialog-content">
+            <i
+              class="pi pi-exclamation-triangle"
+              style="font-size: 2rem; color: #dc3545"
+            ></i>
+            <span>{{ customConfirmMessage }}</span>
+          </div>
+          <div class="custom-dialog-footer">
+            <button
+              class="btn btn-outline-secondary"
+              (click)="showCustomConfirm = false"
+            >
+              No
+            </button>
+            <button class="btn btn-danger" (click)="onCustomConfirmAccept()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

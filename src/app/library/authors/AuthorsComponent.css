@@ -1,0 +1,135 @@
+::ng-deep .p-table table,
+::ng-deep .p-table th,
+::ng-deep .p-table td,
+::ng-deep .p-datatable table,
+::ng-deep .p-datatable th,
+::ng-deep .p-datatable td {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .p-table thead th,
+::ng-deep .p-datatable thead th {
+  background-color: #f8f9fa !important;
+  font-weight: bold !important;
+}
+
+::ng-deep .p-table tbody tr,
+::ng-deep .p-datatable tbody tr {
+  height: 3.2rem;
+}
+
+::ng-deep .p-paginator {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .p-paginator .p-dropdown,
+::ng-deep .p-paginator .p-dropdown .p-dropdown-label,
+::ng-deep .p-paginator .p-dropdown .p-inputtext,
+::ng-deep .p-dropdown-panel,
+::ng-deep .p-dropdown-items,
+::ng-deep .p-dropdown {
+  border: 2px solid #bdbdbd !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+::ng-deep .p-paginator .p-dropdown .p-dropdown-label,
+::ng-deep .p-dropdown .p-dropdown-label {
+  color: #333 !important;
+  font-weight: 500;
+  background: #fff !important;
+}
+
+::ng-deep .p-paginator > * {
+  margin-right: 1.2rem !important;
+}
+
+::ng-deep .p-paginator > *:last-child {
+  margin-right: 0 !important;
+}
+
+::ng-deep .custom-edit-btn .p-button,
+::ng-deep .custom-edit-btn.p-button {
+  background-color: #ff9800 !important;
+  border: none !important;
+}
+
+::ng-deep .custom-edit-btn .pi-pencil,
+::ng-deep .custom-edit-btn.p-button .pi-pencil,
+::ng-deep .custom-edit-btn .p-button-icon,
+::ng-deep .custom-edit-btn.p-button .p-button-icon {
+  color: #fff !important;
+}
+
+::ng-deep .custom-delete-btn .p-button,
+::ng-deep .custom-delete-btn.p-button {
+  background-color: #e53935 !important;
+  border: none !important;
+}
+
+::ng-deep .custom-delete-btn .pi-trash,
+::ng-deep .custom-delete-btn.p-button .pi-trash,
+::ng-deep .custom-delete-btn .p-button-icon,
+::ng-deep .custom-delete-btn.p-button .p-button-icon {
+  color: #fff !important;
+}
+
+::ng-deep .custom-view-btn .p-button,
+::ng-deep .custom-view-btn.p-button {
+  background-color: #1976d2 !important;
+  border: none !important;
+}
+
+::ng-deep .custom-view-btn .pi-eye,
+::ng-deep .custom-view-btn.p-button .pi-eye,
+::ng-deep .custom-view-btn .p-button-icon,
+::ng-deep .custom-view-btn.p-button .p-button-icon {
+  color: #fff !important;
+}
+
+/* Action buttons: compact size and aligned */
+::ng-deep .custom-edit-btn .p-button,
+::ng-deep .custom-edit-btn.p-button,
+::ng-deep .custom-delete-btn .p-button,
+::ng-deep .custom-delete-btn.p-button,
+::ng-deep .custom-view-btn .p-button,
+::ng-deep .custom-view-btn.p-button {
+  border-radius: 0 !important;
+  min-width: 2.2rem !important;
+  min-height: 2.2rem !important;
+  width: 2.2rem !important;
+  height: 2.2rem !important;
+  font-size: 1.1rem !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.3rem;
+}
+
+::ng-deep .custom-view-btn.p-button {
+  margin-right: 0 !important;
+}
+
+.acciones-botones,
+.acciones-botones * {
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+.acciones-botones {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.3rem !important;
+}
+
+.acciones-botones > * {
+  display: inline-flex !important;
+  vertical-align: middle !important;
+}
