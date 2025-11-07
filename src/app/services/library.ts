@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthGuard } from '../guards/AuthGuardService';
-import { environment } from 'src/environments/Environment';
-import { IAuthor, IPublishingHouse, IBook } from './LibraryInterface';
+import { AuthGuard } from '../guards/auth-guard';
+import { environment } from 'src/environments/environment';
+import { IAuthor, IPublishingHouse, IBook } from '../library/library.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -99,7 +99,7 @@ export class LibraryService {
     const headers = this.getHeaders();
     // Remove content-type header to let the browser set it with the correct boundary
     headers.delete('Content-Type');
-    
+
     const formData = new FormData();
     formData.append('title', book.title);
     formData.append('pages', book.pages.toString());
@@ -107,7 +107,7 @@ export class LibraryService {
     formData.append('authorId', book.authorId?.toString()!);
     formData.append('publishingHouseId', book.publishingHouseId?.toString()!);
     formData.append('discontinued', book.discontinued ? 'true' : 'false');
-    
+
     // Check if photo is a File object and append it with the correct field name 'photoCover'
     if (book.photo instanceof File) {
       formData.append('photoCover', book.photo, book.photo.name);
@@ -132,7 +132,7 @@ export class LibraryService {
     const headers = this.getHeaders();
     // Remove content-type header to let the browser set it with the correct boundary
     headers.delete('Content-Type');
-    
+
     const formData = new FormData();
     formData.append('title', book.title);
     formData.append('pages', book.pages.toString());
@@ -140,7 +140,7 @@ export class LibraryService {
     formData.append('authorId', book.authorId?.toString()!);
     formData.append('publishingHouseId', book.publishingHouseId?.toString()!);
     formData.append('discontinued', book.discontinued ? 'true' : 'false');
-    
+
     // Check if photo is a File object and append it with the correct field name 'photoCover'
     if (book.photo instanceof File) {
       formData.append('photoCover', book.photo, book.photo.name);

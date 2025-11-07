@@ -5,16 +5,16 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
-import { AppService } from 'src/app/services/AppService';
-import { AuthGuard } from 'src/app/guards/AuthGuardService';
-import { ILogin } from 'src/app/library/interfaces/LoginInterface';
-import { environment } from 'src/environments/Environment';
+import { AppService } from 'src/app/services/app';
+import { AuthGuard } from 'src/app/guards/auth-guard';
+import { ILogin } from 'src/app/library/interfaces/login.interface';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  templateUrl: './LoginComponent.html',
-  styleUrls: ['./LoginComponent.css'],
+  templateUrl: './login.html',
+  styleUrls: ['./login.css'],
   providers: [MessageService],
   imports: [CommonModule, FormsModule, ToastModule, RouterModule],
 })

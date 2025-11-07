@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { AuthorsComponent } from './library/authors/AuthorsComponent';
-import { PublishingHousesComponent } from './library/publishing-houses/PublishingHousesComponent';
-import { BooksComponent } from './library/books/BooksComponent';
-import { LoginComponent } from './start/login/LoginComponent';
-import { NotFoundComponent } from './start/not-found/NotFoundComponent';
-import { LibraryComponent } from './library/LibraryComponent';
+import { AuthorsComponent } from './library/authors/authors';
+import { PublishingHousesComponent } from './library/publishing-houses/publishing-houses';
+import { BooksComponent } from './library/books/books';
+import { LoginComponent } from './start/login/login';
+import { NotFoundComponent } from './start/not-found/not-found';
+import { LibraryComponent } from './library/library';
 
 export const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },

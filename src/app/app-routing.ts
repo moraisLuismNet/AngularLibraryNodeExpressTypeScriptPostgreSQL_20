@@ -1,12 +1,12 @@
 import { inject, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './start/login/LoginComponent';
-import { NotFoundComponent } from './start/not-found/NotFoundComponent';
+import { LoginComponent } from './start/login/login';
+import { NotFoundComponent } from './start/not-found/not-found';
 import { AuthGuard } from './guards/AuthGuardService';
-import { LibraryComponent } from './library/LibraryComponent';
+import { LibraryComponent } from './library/library';
 import { AuthorsComponent } from './library/authors/AuthorsComponent';
-import { PublishingHousesComponent } from './library/publishing-houses/PublishingHousesComponent';
-import { BooksComponent } from './library/books/BooksComponent';
+import { PublishingHousesComponent } from './library/publishing-houses/publishing-houses';
+import { BooksComponent } from './library/books/books';
 
 export const canActivate = (authGuard = inject(AuthGuard)) =>
   authGuard.isLoggedIn();

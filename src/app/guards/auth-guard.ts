@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ILoginResponse } from '../library/interfaces/LoginInterface';
+import { ILoginResponse } from '../library/interfaces/login.interface';
 
 @Injectable({
   providedIn: 'root',

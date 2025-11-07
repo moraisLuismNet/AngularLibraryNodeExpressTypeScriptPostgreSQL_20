@@ -19,14 +19,14 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { IAuthor, IBook, IPublishingHouse } from '../LibraryInterface';
-import { LibraryService } from '../LibraryService';
+import { IAuthor, IBook, IPublishingHouse } from '../library.interface';
+import { LibraryService } from '../../services/library';
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  templateUrl: './BooksComponent.html',
-  styleUrls: ['./BooksComponent.css'],
+  templateUrl: './books.html',
+  styleUrls: ['./books.css'],
   providers: [ConfirmationService],
   imports: [
     CommonModule,
@@ -56,17 +56,19 @@ export class BooksComponent implements OnInit {
   showCustomConfirm = false;
   customConfirmMessage = '';
   private bookToDelete: IBook | null = null;
+  private bookImage: File | null | undefined = null;
 
   book = signal<IBook>({
     isbn: 0,
     title: '',
     pages: 0,
     price: 0,
-    photo: null,
-    photoCover: null,
     discontinued: false,
-    authorId: null,
     publishingHouseId: null,
+    authorId: null,
+    photoCover: null,
+    photo: null,
+    photoName: null
   });
 
   email: string = '';
@@ -94,11 +96,10 @@ export class BooksComponent implements OnInit {
 
   getAuthors() {
     this.libraryService.getAuthors().subscribe({
-      next: (data) => {
-        this.visibleError = false;
+      next: (data: IAuthor[]) => {
         this.authors = data;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },
@@ -107,11 +108,10 @@ export class BooksComponent implements OnInit {
 
   getPublishinHouses() {
     this.libraryService.getPublishingHouses().subscribe({
-      next: (data) => {
-        this.visibleError = false;
+      next: (data: IPublishingHouse[]) => {
         this.publishingHouses = data;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },
@@ -120,11 +120,10 @@ export class BooksComponent implements OnInit {
 
   getBooks() {
     this.libraryService.getBooks().subscribe({
-      next: (data) => {
-        this.visibleError = false;
+      next: (data: IBook[]) => {
         this.books = data;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },
@@ -159,48 +158,47 @@ export class BooksComponent implements OnInit {
       this.visiblePhoto = true;
     }
   }
+
   save() {
     if (this.bookForm.valid) {
-      if (!this.bookForm.value.authorId) {
-        alert('Debes seleccionar un autor');
-        return;
-      }
-      if (this.book().isbn === 0) {
-        this.libraryService
-          .addBook({
-            ...this.book(),
-            ...this.bookForm.value,
-          })
-          .subscribe({
-            next: (data) => {
-              this.visibleError = false;
-              this.bookForm.reset();
-              this.getBooks();
-            },
-            error: (err) => {
-              console.log(err);
-              this.visibleError = true;
-              this.controlError(err);
-            },
-          });
+      const bookData: IBook = {
+        isbn: this.book().isbn || 0, // Will be set by the server for new books
+        title: this.bookForm.value.title || '',
+        pages: this.bookForm.value.pages || 0,
+        price: this.bookForm.value.price || 0,
+        discontinued: this.bookForm.value.discontinued || false,
+        authorId: this.bookForm.value.authorId || null,
+        publishingHouseId: this.bookForm.value.publishingHouseId || null,
+        photoCover: null,
+        photo: this.bookImage || null
+      };
+
+      if (this.book().isbn) {
+        // Update existing book
+        this.libraryService.updateBook(bookData).subscribe({
+          next: (data: IBook) => {
+            this.visibleError = false;
+            this.cancelEdition();
+            this.getBooks();
+          },
+          error: (err: any) => {
+            this.visibleError = true;
+            this.controlError(err);
+          },
+        });
       } else {
-        this.libraryService
-          .updateBook({
-            ...this.book(),
-            ...this.bookForm.value,
-          })
-          .subscribe({
-            next: (data) => {
-              this.visibleError = false;
-              this.cancelEdition();
-              this.bookForm.reset();
-              this.getBooks();
-            },
-            error: (err) => {
-              this.visibleError = true;
-              this.controlError(err);
-            },
-          });
+        // Add new book
+        this.libraryService.addBook(bookData).subscribe({
+          next: (data: IBook) => {
+            this.visibleError = false;
+            this.bookForm.reset();
+            this.getBooks();
+          },
+          error: (err: any) => {
+            this.visibleError = true;
+            this.controlError(err);
+          },
+        });
       }
     }
   }
@@ -219,10 +217,11 @@ export class BooksComponent implements OnInit {
     this.showCustomConfirm = false;
   }
 
-  deleteBook(id: number) {
-    this.libraryService.deleteBook(id).subscribe({
-      next: (data: IBook) => {
+  deleteBook(isbn: number) {
+    this.libraryService.deleteBook(isbn).subscribe({
+      next: (data: any) => {
         this.visibleError = false;
+        this.bookForm.reset();
         this.getBooks();
       },
       error: (err: any) => {

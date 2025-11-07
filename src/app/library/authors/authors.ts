@@ -12,14 +12,14 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { IAuthor } from '../LibraryInterface';
-import { LibraryService } from '../LibraryService';
+import { IAuthor } from '../library.interface';
+import { LibraryService } from '../../services/library';
 
 @Component({
   selector: 'app-authors',
   standalone: true,
-  templateUrl: './AuthorsComponent.html',
-  styleUrls: ['./AuthorsComponent.css'],
+  templateUrl: './authors.html',
+  styleUrls: ['./authors.css'],
   providers: [ConfirmationService],
   imports: [
     CommonModule,
@@ -65,11 +65,11 @@ export class AuthorsComponent implements OnInit {
 
   getAuthors() {
     this.libraryService.getAuthors().subscribe({
-      next: (data) => {
+      next: (data: IAuthor[]) => {
         this.visibleError = false;
         this.authors = data;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },
@@ -85,12 +85,12 @@ export class AuthorsComponent implements OnInit {
             nameAuthor: this.authorForm.value.nameAuthor,
           })
           .subscribe({
-            next: (data) => {
+            next: (data: IAuthor) => {
               this.visibleError = false;
               this.authorForm.reset();
               this.getAuthors();
             },
-            error: (err) => {
+            error: (err: any) => {
               console.log(err);
               this.visibleError = true;
               this.controlError(err);
@@ -103,13 +103,13 @@ export class AuthorsComponent implements OnInit {
             nameAuthor: this.authorForm.value.nameAuthor,
           })
           .subscribe({
-            next: (data) => {
+            next: (data: IAuthor) => {
               this.visibleError = false;
               this.cancelEdition();
               this.authorForm.reset();
               this.getAuthors();
             },
-            error: (err) => {
+            error: (err: any) => {
               this.visibleError = true;
               this.controlError(err);
             },
@@ -147,12 +147,12 @@ export class AuthorsComponent implements OnInit {
 
   deleteAuthor(id: number) {
     this.libraryService.deleteAuthor(id).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.visibleError = false;
         this.authorForm.reset();
         this.getAuthors();
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },

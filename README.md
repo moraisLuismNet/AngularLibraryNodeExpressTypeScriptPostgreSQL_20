@@ -5,49 +5,49 @@
 AngularLibraryNodeExpressTypeScriptPostgreSQL_20/  
 ├───app/  
 │   ├───guards/  
-│   │   └───AuthGuardService.ts  
+│   │   └───auth-guard.ts  
 │   ├───library/  
 │   │   ├───authors/  
-│   │   │   ├───AuthorsComponent.css  
-│   │   │   ├───AuthorsComponent.html  
-│   │   │   └───AuthorsComponent.ts  
+│   │   │   ├───authors.css  
+│   │   │   ├───authors.html  
+│   │   │   └───authors.ts  
 │   │   ├───books/  
-│   │   │   ├───BooksComponent.css  
-│   │   │   ├───BooksComponent.html  
-│   │   │   └───BooksComponent.ts  
+│   │   │   ├───books.css  
+│   │   │   ├───books.html  
+│   │   │   └───books.ts  
 │   │   ├───publishing-houses/  
-│   │   │   ├───PublishingHousesComponent.css  
-│   │   │   ├───PublishingHousesComponent.html  
-│   │   │   └───PublishingHousesComponent.ts  
+│   │   │   ├───publishing-houses.css  
+│   │   │   ├───publishing-houses.html  
+│   │   │   └───publishing-houses.ts  
 │   │   ├───interfaces/  
-│   │   │   └───LoginInterface.ts  
-│   │   ├───LibraryComponent.html  
-│   │   ├───LibraryComponent.ts  
-│   │   ├───LibraryInterface.ts  
-│   │   └───LibraryService.ts  
+│   │   │   └───login.interface.ts  
+│   │   ├───library.html  
+│   │   ├───library.ts  
+│   │   └───library.interface.ts  
 │   ├───services/  
-│   │   └───AppService.ts  
+│   │   ├───app.ts    
+│   │   └───library.ts   
 │   ├───shared/  
 │   │   ├───navbar/  
-│   │   │   ├───NavbarComponent.html  
-│   │   │   └───NavbarComponent.ts  
+│   │   │   ├───navbar.html  
+│   │   │   └───navbar.ts  
 │   ├───start/  
 │   │   ├───login/  
-│   │   │   ├───LoginComponent.css  
-│   │   │   ├───LoginComponent.html  
-│   │   │   └───LoginComponent.ts  
+│   │   │   ├───login.css  
+│   │   │   ├───login.html  
+│   │   │   └───login.ts  
 │   │   ├───not-found/  
-│   │   │   ├───NotFoundComponent.css  
-│   │   │   ├───NotFoundComponent.html  
-│   │   │   └───NotFoundComponent.ts  
-│   ├───AppComponent.html  
-│   ├───AppComponent.ts  
-│   ├───AppConfig.ts  
-│   ├───AppRoutingModule.ts  
-│   └───Routes.ts  
+│   │   │   ├───not-found.css  
+│   │   │   ├───not-found.html  
+│   │   │   └───not-found.ts  
+│   ├───app.html  
+│   ├───app.ts  
+│   ├───app-config.ts  
+│   ├───app.routing.ts  
+│   └───app.routes.ts  
 ├───environments/  
-│   ├───Environment.ts  
-│   └───EnvironmentDevelopment.ts   
+│   ├───environment.ts  
+│   └───environment.development.ts   
 ├───main.ts    
 ├───angular.json  
 ├───package.json  

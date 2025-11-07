@@ -12,14 +12,14 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { IPublishingHouse } from '../LibraryInterface';
-import { LibraryService } from '../LibraryService';
+import { IPublishingHouse } from '../library.interface';
+import { LibraryService } from '../../services/library';
 
 @Component({
   selector: 'app-publishing-houses',
   standalone: true,
-  templateUrl: './PublishingHousesComponent.html',
-  styleUrls: ['./PublishingHousesComponent.css'],
+  templateUrl: './publishing-houses.html',
+  styleUrls: ['./publishing-houses.css'],
   providers: [ConfirmationService],
   imports: [
     CommonModule,
@@ -65,11 +65,11 @@ export class PublishingHousesComponent implements OnInit {
 
   getPublishingHouses() {
     this.libraryService.getPublishingHouses().subscribe({
-      next: (data) => {
+      next: (data: IPublishingHouse[]) => {
         this.visibleError = false;
         this.publishingHouses = data;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },
@@ -78,20 +78,21 @@ export class PublishingHousesComponent implements OnInit {
 
   save() {
     if (this.publishingHouseForm.value.namePublishingHouse) {
+      const publishingHouseData: IPublishingHouse = {
+        ...this.publishingHouse(),
+        namePublishingHouse: this.publishingHouseForm.value.namePublishingHouse,
+      };
+
       if (this.publishingHouse().idPublishingHouse === 0) {
         this.libraryService
-          .addPublishingHouse({
-            ...this.publishingHouse(),
-            namePublishingHouse:
-              this.publishingHouseForm.value.namePublishingHouse,
-          })
+          .addPublishingHouse(publishingHouseData)
           .subscribe({
-            next: (data) => {
+            next: (data: IPublishingHouse) => {
               this.visibleError = false;
               this.publishingHouseForm.reset();
               this.getPublishingHouses();
             },
-            error: (err) => {
+            error: (err: any) => {
               console.log(err);
               this.visibleError = true;
               this.controlError(err);
@@ -99,19 +100,15 @@ export class PublishingHousesComponent implements OnInit {
           });
       } else {
         this.libraryService
-          .updatePublishingHouse({
-            ...this.publishingHouse(),
-            namePublishingHouse:
-              this.publishingHouseForm.value.namePublishingHouse,
-          })
+          .updatePublishingHouse(publishingHouseData)
           .subscribe({
-            next: (data) => {
+            next: (data: IPublishingHouse) => {
               this.visibleError = false;
               this.cancelEdition();
               this.publishingHouseForm.reset();
               this.getPublishingHouses();
             },
-            error: (err) => {
+            error: (err: any) => {
               this.visibleError = true;
               this.controlError(err);
             },
@@ -153,12 +150,12 @@ export class PublishingHousesComponent implements OnInit {
 
   deletePublishingHouse(id: number) {
     this.libraryService.deletePublishingHouse(id).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.visibleError = false;
         this.publishingHouseForm.reset();
         this.getPublishingHouses();
       },
-      error: (err) => {
+      error: (err: any) => {
         this.visibleError = true;
         this.controlError(err);
       },

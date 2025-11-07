@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './AppComponent.html',
+  templateUrl: './app.html',
 })
 export class AppComponent {
   title = 'AngularLibrary';
